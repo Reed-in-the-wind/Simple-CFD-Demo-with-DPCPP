@@ -1,13 +1,16 @@
 #include<vector>
 using namespace std;
+
+constexpr size_t nTotalCell = 10;
+constexpr size_t nTotalFace = nTotalCell+1;
+
 template<typename T >
 int matgen(
         vector<T> &q,
         vector<T> &nxs,
         vector<T> &ns,
         vector<T> &vol,
-        vector<T> &leftCellofFace,
-        vector<T> &rightCellofFace,
-        size_t nTotalCell,
-        size_t nTotalFace,
-        size_t nBoundFace );
+        vector<size_t> &leftCellofFace,
+        vector<size_t> &rightCellofFace,
+        vector<size_t> &maps,
+        vector<size_t> &maps_face);
