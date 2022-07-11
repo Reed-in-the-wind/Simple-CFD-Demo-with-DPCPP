@@ -113,6 +113,43 @@ int matgen(
         cout << i << "th face: (left, right) cell = " << "(" << leftCellofFace[i] 
             << "," << rightCellofFace[i] << ")" << endl;
     }
+    //
+    vector<T> ori_dqdx(q.size());
+    for( size_t i=0; i < ori_dqdx.size(); ++i )
+    {
+        if ( i == 0 )
+        {
+            // left boundary
+            ori_dqdx[i] = 0.5* ( ori_q[i+1] + ori_q[i] );
+        }
+        else if( i == ori_dqdx.size()-1 )
+        {
+            // right boundary
+            ori_dqdx[i] = - 0.5* ( ori_q[i-1] + ori_q[i] );
+        }
+        else
+        {
+            ori_dqdx[i] = 0.5* ( ori_q[i+1] + ori_q[i] ) - 0.5 * ( ori_q[i] + ori_q[i-1] );
+        }
+    }
+    cout<<"original dqdx:"<<endl;
+    for( size_t i=0; i < ori_dqdx.size(); ++i )
+    {
+        cout<<ori_dqdx[i]<<" ";
+    }
+    cout << endl;
+    //
+    vector<T> perm_dqdx(q.size());
+    cout<<"permuted dqdx:"<<endl;
+    for( size_t i=0; i < perm_dqdx.size(); ++i )
+    {
+        perm_dqdx[maps[i]] = ori_dqdx[i];
+    }
+    for( size_t i=0; i < perm_dqdx.size(); ++i )
+    {
+        cout<<perm_dqdx[i]<<" ";
+    }
+    cout << endl;
     cout<<"================================Finish Data Generation======================"<<endl;
     return 0;
 }

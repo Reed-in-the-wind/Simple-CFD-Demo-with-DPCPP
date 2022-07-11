@@ -34,6 +34,7 @@ int main(){
 
         dqdx[le] += qfc * nx;
         dqdx[re] -= qfc * nx;
+        //cout<<iFace<<","<<le<<","<<re<<","<<qfc<<","<<dqdx[le]<<","<<dqdx[re]<<endl;
     }
     // obtain the gradient by dividing the cell volume.
     for( size_t iCell=0; iCell < nTotalCell; ++iCell )
@@ -43,10 +44,11 @@ int main(){
     }
     //
     // print gradient dqdx.
-    cout << "==========================gradient dqdx==============="<<endl;
+    cout << "==========================gradient dqdx==============================="<<endl;
     for( size_t iCell = 0; iCell < dqdx.size(); ++iCell )
     {
-        cout<<dqdx[iCell]<<endl;
+        cout<<dqdx[iCell]<<" ";
     }
+    cout<<endl;
     return 0;
 }
