@@ -2,22 +2,51 @@
 #include <matgen.hpp>
 #include <vector>
 using namespace std;
+using float_type = float;
 
 int main(){
-    vector<float> q(nTotalCell);
-    vector<float> nxs(nTotalFace);
-    vector<float> ns(nTotalFace);
-    vector<float> vol(nTotalCell);
+    vector<float_type> q(nTotalCell);
+    vector<float_type> nxs(nTotalFace);
+    vector<float_type> ns(nTotalFace);
+    vector<float_type> vol(nTotalCell);
     vector<size_t> leftCellofFace(nTotalFace);
     vector<size_t> rightCellofFace(nTotalFace);
     vector<size_t> maps(nTotalCell);
     vector<size_t> maps_face(nTotalFace);
-    vector<float> dqdx(nTotalCell);
+    vector<float_type> dqdx(nTotalCell);
     //
+    // random data generarion for mapping relationship
     matgen( q, nxs, ns, vol, leftCellofFace, rightCellofFace, maps, maps_face );
-    for( size_t i = 0; i < q.size(); ++i )
+    //
+    // initiazation for gradient dqdx.
+    for( size_t iCell=0; iCell < dqdx.size(); ++iCell )
     {
-        cout<<q[i]<<endl;
+        dqdx[iCell] = 0.0;
+    }
+    // calculate flux.
+    for( size_t iFace=0; iFace < nTotalFace; ++iFace )
+    {
+        size_t le = leftCellofFace[iFace];
+        size_t re = rightCellofFace[iFace];
+
+        float_type qfc = 0.5 * ( q[le] + q[re] );
+        float_type nx = nxs[iFace] * ns[iFace];
+
+        dqdx[le] += qfc * nx;
+        dqdx[re] -= qfc * nx;
+    }
+    // obtain the gradient by dividing the cell volume.
+    for( size_t iCell=0; iCell < nTotalCell; ++iCell )
+    {
+        float_type ovol = 1.0 / vol[iCell];
+        dqdx[iCell] *= ovol;
+    }
+    //
+    // print gradient dqdx.
+    cout << "==========================gradient dqdx==============="<<endl;
+    for( size_t iCell = 0; iCell < dqdx.size(); ++iCell )
+    {
+        cout<<dqdx[iCell]<<endl;
     }
     return 0;
 }
