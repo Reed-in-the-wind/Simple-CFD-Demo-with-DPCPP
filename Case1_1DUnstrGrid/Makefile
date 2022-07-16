@@ -6,8 +6,8 @@ SOURCE = $(wildcard ./src/*.cpp)
 CPPFILES = $(notdir $(SOURCE))
 OBJS = $(patsubst %.cpp, %.o, $(CPPFILES))
 EXE = main
-CFLAG = -Wall
-CC = g++
+CFLAGS = -Wall -fsycl-unnamed-lambda
+CC = dpcpp
 INCLUDES = -I ./include
 LIBS = 
 

@@ -1,7 +1,8 @@
+#include <CL/sycl.hpp>
 #include <iostream>
 #include <matgen.hpp>
 #include <vector>
-using namespace std;
+using namespace cl::sycl;
 using float_type = float;
 
 int main(){
@@ -44,11 +45,11 @@ int main(){
     }
     //
     // print gradient dqdx.
-    cout << "==========================gradient dqdx==============================="<<endl;
+    std::cout << "==========================gradient dqdx==============================="<<std::endl;
     for( size_t iCell = 0; iCell < dqdx.size(); ++iCell )
     {
-        cout<<dqdx[iCell]<<" ";
+        std::cout<<dqdx[iCell]<<" ";
     }
-    cout<<endl;
+    std::cout<<std::endl;
     return 0;
 }
