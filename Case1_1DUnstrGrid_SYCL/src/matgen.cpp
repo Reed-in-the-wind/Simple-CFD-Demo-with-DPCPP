@@ -34,9 +34,11 @@ int matgen(
     {
         maps[i] = i;
     }
+#ifndef REORDERING
     // generate the random sequence to represent the mapping.
     std::random_shuffle( maps.begin(), maps.end() );
     //
+#endif
     cout<<"cell maps: original -> new"<<endl;
     for( size_t i=0; i<maps.size(); ++i )
     {
@@ -49,8 +51,10 @@ int matgen(
     {
         maps_face[i] = i;
     }
+#ifndef REORDERING
     std::random_shuffle( maps_face.begin(), maps_face.end() );
     //
+#endif
     cout<<"face maps: original -> new"<<endl;
     for( size_t i=0; i<maps_face.size(); ++i )
     {
